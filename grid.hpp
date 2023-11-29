@@ -1,19 +1,22 @@
 //Nothing here just yet
-#pragma once
+// grid.hpp
+#ifndef GRID_HPP
+#define GRID_HPP
 
-#include <vector>
 #include <GL/glew.h>
 #include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include <vector>
 
 class Grid {
 public:
     Grid(int slices);
+    ~Grid();
+
     void render();
 
 private:
     GLuint vao;
     GLuint length;
-    std::vector<glm::vec3> vertices;
-    std::vector<glm::uvec4> indices;
 };
+
+#endif // GRID_HPP
