@@ -1,9 +1,10 @@
 #include <iostream>
 #include <GL/glut.h>
-
+#include "cube.cpp"
 float cameraAngleX = 40.0f;
-float cameraAngleY = 0.0f;
+float cameraAngleY = 00.0f;
 float cameraDistance = 35.0f;
+cube grayCube(2, 0);  // Adjust the grid position of the gray cube
 
 void testCube() {
 	glColor3f(1, 1, 1);//white
@@ -12,6 +13,10 @@ void testCube() {
 
 void drawGrid() {
 	glLineWidth(2); // Increase the line width for better visibility
+
+
+	//float startX = -5.0f;
+	//float startY = -5.0f;
 
 	for (int i = 0; i < 20; ++i) {
 		for (int j = 0; j < 20; ++j) {
@@ -34,6 +39,8 @@ void drawGrid() {
 				glColor3f(0.7, 0.7, 0.7); // Gray color
 			}
 
+
+
 			glBegin(GL_QUADS);
 			glVertex3f(0, 0, 0);
 			glVertex3f(1, 0, 0);
@@ -53,6 +60,7 @@ void drawGrid() {
 			glPopMatrix();
 		}
 	}
+
 }
 
 void updateCamera() {
@@ -68,6 +76,11 @@ void display() {
 	updateCamera();
 
 	drawGrid();
+
+	// Draw the gray cube
+	grayCube.draw();
+
+	// Uncomment the line below to test the cube
 	// testCube();
 
 	glutSwapBuffers();
@@ -92,6 +105,27 @@ void specialKeys(int key, int x, int y) {
 	glutPostRedisplay();
 }
 
+
+void keyboard(unsigned char key, int x, int y) {
+	switch (key) {
+	case 'w':
+		grayCube.move(0.0f, -1.0f);
+
+		break;
+	case 's':
+		grayCube.move(0.0f, 1.0f);
+		break;
+	case 'a':
+		grayCube.move(-1.0f, 0.0f);
+		break;
+	case 'd':
+		grayCube.move(1.0f, 0.0f);
+		break;
+	}
+
+	glutPostRedisplay();
+}
+
 void init() {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -108,6 +142,7 @@ int main(int argc, char **argv) {
 	glutCreateWindow("City Builder");
 	glutDisplayFunc(display);
 	glutSpecialFunc(specialKeys);
+	glutKeyboardFunc(keyboard);
 	init();
 	glutMainLoop();
 	return 0;
