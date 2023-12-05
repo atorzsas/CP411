@@ -262,6 +262,12 @@ void reset() {
         }
     }
 
+    // Clear the list of cubes built
+    for (std::list<cube*>::iterator it = objlist.begin(); it != objlist.end(); ++it) {
+        delete *it;  // Delete the dynamically allocated cube
+    }
+    objlist.clear();  // Clear the list
+
     // If you have objects that need to be reset, do it here
     // Example:
     // grayCube.setPosition(0, 0); // Reset position if there's such a function
