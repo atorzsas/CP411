@@ -8,7 +8,7 @@ float cameraDistance = 35.0f;
 
 bool cubePositions[20][20] = {false};
 //cube cubesBuilt[20][20];
-cube blackSquares[20][20];
+//cube blackSquares[20][20];
 
 
 cube grayCube(0, 0);  // Adjust the grid position of the gray cube
@@ -27,20 +27,20 @@ void drawCube(float x, float y) {
 
 void drawCubes() {
 
-	int gridX = static_cast<int>(grayCube.getX() + 0.5);
-	int gridY = static_cast<int>(grayCube.getY() + 0.5);
-
-	// Check if the position is within the grid boundaries
-	if (gridX >= 0 && gridX < 20 && gridY >= 0 && gridY < 20) {
-		// Mark the position as occupied
-		cubePositions[gridX][gridY] = true;
-        blackSquares[gridX][gridY] = cube(gridX, gridY);
-
-		//cube temp(gridX+1, gridY+1);  // Adjust the grid position of the gray cube
-		//temp.draw();
-		//glutSwapBuffers();
-		//drawCubes();
-	}
+//	int gridX = static_cast<int>(grayCube.getX() + 0.5);
+//	int gridY = static_cast<int>(grayCube.getY() + 0.5);
+//
+//	// Check if the position is within the grid boundaries
+//	if (gridX >= 0 && gridX < 20 && gridY >= 0 && gridY < 20) {
+//		// Mark the position as occupied
+//		cubePositions[gridX][gridY] = true;
+//        //blackSquares[gridX][gridY] = cube(gridX, gridY);
+//
+//		//cube temp(gridX+1, gridY+1);  // Adjust the grid position of the gray cube
+//		//temp.draw();
+//		//glutSwapBuffers();
+//		//drawCubes();
+//	}
 }
 
 
@@ -107,7 +107,7 @@ void display() {
 		for (int j = 0; j < 20; ++j) {
 			if(cubePositions[i][j] == true)
 			{
-				                blackSquares[i][j].draw();
+				                //blackSquares[i][j].draw();
 
 			}
 		}
@@ -115,7 +115,7 @@ void display() {
 
 
 	// Draw the gray cube
-	//grayCube.draw();
+	grayCube.draw();
 	glutSwapBuffers();
 }
 
@@ -153,7 +153,7 @@ void keyboard(unsigned char key, int x, int y) {
 		grayCube.move(1.0f, 0.0f);
 		break;
 	case 'b':
-		drawCubes();
+		//drawCubes();
 		// Calculate grid position
 		//		int gridX = static_cast<int>(grayCube.getX() + 0.5);
 		//		int gridY = static_cast<int>(grayCube.getY() + 0.5);
