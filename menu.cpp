@@ -1,34 +1,26 @@
-#include "menu.hpp"
+#ifndef MENU_HPP_
+#define MENU_HPP_
 
-// Define global variables and externs as needed
-// extern GLint csType; // Example extern variable
+#include <GL/glut.h>
 
-void mainMenu(GLint option) {
-    switch (option) {
-        case 1:
-            // reset(); // Call your reset function
-            reset();
-            break;
-        case 2:
-            exit(0); // Quit the application
-            break;
-    }
-    glutPostRedisplay();
-}
+// Define your menu action functions here
+void menu();
+void mainMenu(GLint option);
+void ObjSubMenu(GLint objectOption);
+void MCSTransMenu(GLint transOption);
+void WCSTransMenu(GLint transOption);
+void VCSTransMenu(GLint transOption);
+void reset();
+void light();
+void MCSTransform(GLint);
+void WCSTransform(GLint);
+void VCSTransform(GLint);
+void cullMenu(GLint option);
+void lightMenu(GLint option);
+void lightTransform(GLint);
+void shadeMenu(GLint option);
+void animateMenu(GLint option);
+void curveSurfaceMenu(GLint option);
+void move();
 
-// Implement other menu functions below...
-// These functions should call the appropriate methods or set global state
-// variables based on the user's menu selections
-
-void ObjSubMenu(GLint objectOption) {
-    // ... Logic for object submenu ...
-}
-
-void MCSTransMenu(GLint transOption) {
-    // ... Logic for MCS transformation submenu ...
-}
-
-// ... Implement other menu functions as needed ...
-
-// Finally, ensure that you have implemented the extern variables and any other
-// required logic in your main application to support these menu actions.
+#endif // MENU_HPP_
