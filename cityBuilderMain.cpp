@@ -108,10 +108,17 @@ void drawGrid() {
 }
 
 void updateCamera() {
-	glTranslatef(0, 0, -cameraDistance);
-	glRotatef(cameraAngleX, 1, 0, 0);
-	glRotatef(cameraAngleY, 0, 1, 0);
+    // Move the whole scene down and back to be in the view of the camera
+    glTranslatef(0.0f, -5.0f, -cameraDistance);
+    
+    // Apply rotations around the origin (center of the grid)
+    glRotatef(cameraAngleX, 1.0f, 0.0f, 0.0f); // Rotate the camera around the X-axis
+    glRotatef(cameraAngleY, 0.0f, 1.0f, 0.0f); // Rotate the camera around the Y-axis
+    
+    // Move the camera to look at the center of the grid
+    glTranslatef(-10.0f, 0.0f, -10.0f);
 }
+
 
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -185,6 +192,18 @@ void keyboard(unsigned char key, int x, int y) {
     case 't':
         sunEnabled = !sunEnabled;
         break;
+    case '-':
+        cameraDistance += 2.0f; // zoom out
+        if (cameraDistance > 100.0f) { // set a max distance to prevent going too far
+            cameraDistance = 100.0f;
+        }
+        break;
+    case '=':
+            cameraDistance -= 2.0f; // Zoom in
+            if (cameraDistance < 5.0f) { // Set a minimum distance to prevent getting too close
+                cameraDistance = 5.0f;
+            }
+            break;
 	case 'b':
 		//drawCubes();
 		// Calculate grid position
