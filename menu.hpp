@@ -11,6 +11,7 @@ void MCSTransMenu(GLint transOption);
 void WCSTransMenu(GLint transOption);
 void VCSTransMenu(GLint transOption);
 void reset();
+void light();
 void MCSTransform(GLint);
 void WCSTransform(GLint);
 void VCSTransform(GLint);
