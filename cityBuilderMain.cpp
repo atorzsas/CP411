@@ -203,9 +203,6 @@ void keyboard(unsigned char key, int x, int y) {
 	case 'd':
 		grayCube.move(1.0f, 0.0f);
 		break;
-    case 't':
-        sunEnabled = !sunEnabled;
-        break;
     case '-':
         cameraDistance += 2.0f; // zoom out
         if (cameraDistance > 100.0f) { // set a max distance to prevent going too far
@@ -291,11 +288,16 @@ void reset() {
     // Add any other state resets you need here
 }
 
+void light() {
+    sunEnabled = !sunEnabled;
+}
+
 void menu() {
     // Create the main menu and attach menu entries
     GLint main_Menu = glutCreateMenu(mainMenu);
-    glutAddMenuEntry("Reset", 1);
-    glutAddMenuEntry("Quit", 2);
+    glutAddMenuEntry("Light", 1);
+    glutAddMenuEntry("Reset", 2);
+    glutAddMenuEntry("Quit", 3);
     
     // Attach the menu to the right button
     glutAttachMenu(GLUT_RIGHT_BUTTON);
