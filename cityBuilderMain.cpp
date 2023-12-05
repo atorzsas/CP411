@@ -1,45 +1,72 @@
 #include <iostream>
 #include <GL/glut.h>
 #include "cube.cpp"
+
 float cameraAngleX = 40.0f;
 float cameraAngleY = 00.0f;
 float cameraDistance = 35.0f;
-cube grayCube(2, 0);  // Adjust the grid position of the gray cube
 
-void testCube() {
-	glColor3f(1, 1, 1);//white
+bool cubePositions[20][20] = {false};
+//cube cubesBuilt[20][20];
+cube blackSquares[20][20];
+
+
+cube grayCube(0, 0);  // Adjust the grid position of the gray cube
+
+cube testCube(2, 2);  // Adjust the grid position of the gray cube
+
+
+void drawCube(float x, float y) {
+	glPushMatrix();
+	glColor3f(0.0, 1.0, 0.0); // Green color for cubes
+	glTranslatef(x, 0.2, y);
 	glutSolidCube(0.4);
+	glPopMatrix();
 }
 
+
+void drawCubes() {
+
+	int gridX = static_cast<int>(grayCube.getX() + 0.5);
+	int gridY = static_cast<int>(grayCube.getY() + 0.5);
+
+	// Check if the position is within the grid boundaries
+	if (gridX >= 0 && gridX < 20 && gridY >= 0 && gridY < 20) {
+		// Mark the position as occupied
+		cubePositions[gridX][gridY] = true;
+        blackSquares[gridX][gridY] = cube(gridX, gridY);
+
+		//cube temp(gridX+1, gridY+1);  // Adjust the grid position of the gray cube
+		//temp.draw();
+		//glutSwapBuffers();
+		//drawCubes();
+	}
+}
+
+
+
 void drawGrid() {
-	glLineWidth(2); // Increase the line width for better visibility
-
-
-	//float startX = -5.0f;
-	//float startY = -5.0f;
+	glLineWidth(2);
 
 	for (int i = 0; i < 20; ++i) {
 		for (int j = 0; j < 20; ++j) {
 			glPushMatrix();
 
-			glTranslatef(i, 0, j);  // Translate to the grid position
+			glTranslatef(i, 0, j);
 
-			// Default green for all squares
-			glColor3f(0.0, 1.0, 0.0);  // Green color
-
-			//            if (i == 2 && j == 0) {
-			//                glColor3f(1.0, 0.0, 0.0); // Red color
-			//            }
-
-			// Add a condition for the gray line down the middle and across
-			if (j == 10) {
+			if (j == 10 || i == 10) {
 				glColor3f(0.7, 0.7, 0.7); // Gray color
-			}
-			if (i == 10) {
-				glColor3f(0.7, 0.7, 0.7); // Gray color
-			}
+			} else if (cubePositions[i][j]) {
+				//cube cubesBuilt[i][j] = drawCube(i, j);
+				//'cubesBuilt[i][j].draw();  // Draw the cube at the specified position
+
+				//glScalef(2.5, 2.5, 2.5);
+				//glColor3f(1.0, 1.0, 1.0); // new color for occupied positions
 
 
+			} else {
+				glColor3f(0.0, 1.0, 0.0); // Default green color
+			}
 
 			glBegin(GL_QUADS);
 			glVertex3f(0, 0, 0);
@@ -48,7 +75,6 @@ void drawGrid() {
 			glVertex3f(0, 0, 1);
 			glEnd();
 
-			// Draw black outlines for each square
 			glColor3f(0.0, 0.0, 0.0); // Black color for outlines
 			glBegin(GL_LINE_LOOP);
 			glVertex3f(0, 0, 0);
@@ -60,7 +86,6 @@ void drawGrid() {
 			glPopMatrix();
 		}
 	}
-
 }
 
 void updateCamera() {
@@ -76,13 +101,21 @@ void display() {
 	updateCamera();
 
 	drawGrid();
+	testCube.draw();
+
+	for (int i = 0; i < 20; ++i) {
+		for (int j = 0; j < 20; ++j) {
+			if(cubePositions[i][j] == true)
+			{
+				                blackSquares[i][j].draw();
+
+			}
+		}
+	}
+
 
 	// Draw the gray cube
-	grayCube.draw();
-
-	// Uncomment the line below to test the cube
-	// testCube();
-
+	//grayCube.draw();
 	glutSwapBuffers();
 }
 
@@ -105,12 +138,10 @@ void specialKeys(int key, int x, int y) {
 	glutPostRedisplay();
 }
 
-
 void keyboard(unsigned char key, int x, int y) {
 	switch (key) {
 	case 'w':
 		grayCube.move(0.0f, -1.0f);
-
 		break;
 	case 's':
 		grayCube.move(0.0f, 1.0f);
@@ -120,6 +151,32 @@ void keyboard(unsigned char key, int x, int y) {
 		break;
 	case 'd':
 		grayCube.move(1.0f, 0.0f);
+		break;
+	case 'b':
+		drawCubes();
+		// Calculate grid position
+		//		int gridX = static_cast<int>(grayCube.getX() + 0.5);
+		//		int gridY = static_cast<int>(grayCube.getY() + 0.5);
+		//
+		//		// Check if the position is within the grid boundaries
+		//		//if (gridX >= 0 && gridX < 20 && gridY >= 0 && gridY < 20) {
+		//			// Mark the position as occupied
+		//			cubePositions[gridX][gridY] = true;
+		//			cube temp(gridX+1, gridY+1);  // Adjust the grid position of the gray cube
+		//			temp.draw();
+		//			glutSwapBuffers();
+		//			drawCubes();
+		//glutSolidCube(0.4);
+		//            for (int i = 0; i < 20; ++i) {
+		//                for (int j = 0; j < 20; ++j) {
+		//
+		//                    //cubesBuilt[i][j] = cube(i, j);
+		//                }
+		//            }
+		//cubesBuilt[gridX][gridY] = temp;
+		//cubesBuilt[gridX][gridY].draw();
+		//}
+
 		break;
 	}
 
