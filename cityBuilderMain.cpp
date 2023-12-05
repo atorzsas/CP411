@@ -1,12 +1,26 @@
 #include <iostream>
 #include <GL/glut.h>
 #include "cube.cpp"
+#include "menu.hpp"
 
 float cameraAngleX = 40.0f;
 float cameraAngleY = 00.0f;
 float cameraDistance = 35.0f;
 
 void updateSunPosition();
+
+void WCSTransMenu(GLint transOption) {}
+void VCSTransMenu(GLint transOption) {}
+void MCSTransform(GLint) {}
+void WCSTransform(GLint) {}
+void VCSTransform(GLint) {}
+void cullMenu(GLint option) {}
+void lightMenu(GLint option) {}
+void lightTransform(GLint) {}
+void shadeMenu(GLint option) {}
+void animateMenu(GLint option) {}
+void curveSurfaceMenu(GLint option) {}
+void move() {}
 
 // Sun position and color
 GLfloat sunPosition[] = { 0.0f, 10.0f, 0.0f, 0.0f };  // Directional light
@@ -249,6 +263,43 @@ void keyboard(unsigned char key, int x, int y) {
 	glutPostRedisplay();
 }
 
+void reset() {
+    // Reset camera settings
+    cameraAngleX = 40.0f;
+    cameraAngleY = 0.0f;
+    cameraDistance = 35.0f;
+
+    // Reset sun settings
+    sunEnabled = true;
+    sunPosition[0] = 0.0f;
+    sunPosition[1] = 10.0f;
+    sunPosition[2] = 0.0f;
+    sunPosition[3] = 0.0f; // Assuming the w component is intentionally 0 for directional light
+
+    // Reset cube positions or other game state variables
+    for (int i = 0; i < 20; ++i) {
+        for (int j = 0; j < 20; ++j) {
+            cubePositions[i][j] = false;
+        }
+    }
+
+    // If you have objects that need to be reset, do it here
+    // Example:
+    // grayCube.setPosition(0, 0); // Reset position if there's such a function
+    // testCube.setPosition(2, 2); // Same as above
+
+    // Add any other state resets you need here
+}
+
+void menu() {
+    // Create the main menu and attach menu entries
+    GLint main_Menu = glutCreateMenu(mainMenu);
+    glutAddMenuEntry("Reset", 1);
+    glutAddMenuEntry("Quit", 2);
+    
+    // Attach the menu to the right button
+    glutAttachMenu(GLUT_RIGHT_BUTTON);
+}
 
 void init() {
     glMatrixMode(GL_PROJECTION);
@@ -268,6 +319,8 @@ void init() {
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
     glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
+
+    menu(); // call the menu init function here
 }
 
 
