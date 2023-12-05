@@ -1,0 +1,106 @@
+<h1 id="cp411-project-final-project-proposal">CP411 Project: Final Project Proposal</h1>
+<p>Author(s): Jacob Reil - 210514020, Alexander Torzsas - 210233050</p>
+<p>Professor: HBF</p>
+<p>Date: 2023-11-28</p>
+<h2 id="introduction">1 Introduction</h2>
+<p>Our Interactive 3D City Builder is a computer graphics application that allows users to design and build their own virtual city in a 3D environment. The project aims to provide an immersive experience where users can express their creativity in urban planning and architecture. By offering a wide range of tools and elements like buildings, roads, and natural landscapes, the application serves as a sandbox for experimenting with city design concepts.</p>
+<p><strong>Rationales:</strong></p>
+<ul class="incremental">
+<li><strong>Educational Value:</strong> Teaches basics of city layout and sustainable planning.</li>
+<li><strong>Technical Showcase:</strong> Implements advanced 3D modeling and rendering using OpenGL.</li>
+<li><strong>User Engagement:</strong> Encourages creative problem-solving and design thinking.</li>
+</ul>
+<h2 id="problem-solving-and-algorithms">2 Problem-solving and algorithms</h2>
+<p>The primary computing challenge in the Interactive 3D City Builder is the efficient and intuitive manipulation of 3D objects within a complex virtual environment. This involves several key aspects:</p>
+<ul class="incremental">
+<li><strong>3D Object Picking:</strong> Accurate selection and interaction with 3D objects using a 2D mouse.</li>
+<li><strong>Responsive Object Manipulation:</strong> Seamless movement, rotation, and placement of 3D objects.</li>
+<li><strong>Performance Optimization:</strong> Smooth handling of a large number of 3D objects.</li>
+</ul>
+<p><strong>Possible Solutions and Algorithms:</strong></p>
+<ul class="incremental">
+<li><strong>Ray Picking for Object Selection:</strong>
+<ul class="incremental">
+<li><strong>Ray Casting:</strong> Translates 2D mouse coordinates to a 3D ray.</li>
+<li><strong>Intersection Tests:</strong> Checks ray intersection with 3D object boundaries.</li>
+<li><strong>Selection Logic:</strong> Identifies the nearest object intersecting with the ray.</li>
+</ul></li>
+<li><strong>Object Manipulation Techniques:</strong>
+<ul class="incremental">
+<li><strong>Translation and Rotation:</strong> Based on user input.</li>
+<li><strong>Grid Snapping:</strong> Aligns objects to a predefined grid for precise placement.</li>
+<li><strong>Constraint-based Manipulation:</strong> Prevents unrealistic placements.</li>
+</ul></li>
+<li><strong>User Interface Enhancements:</strong>
+<ul class="incremental">
+<li><strong>Direct Manipulation Interface:</strong> Intuitive GUI for object handling.</li>
+<li><strong>Visual Feedback:</strong> Highlights selected objects.</li>
+<li><strong>Contextual Tools:</strong> Menus and tooltips for information and control.</li>
+</ul></li>
+</ul>
+<h2 id="design-consideration">3 Design consideration</h2>
+<p><strong>System Design Overview</strong></p>
+<p>The Interactive 3D City Builder is designed to be a robust, user-friendly application that allows users to create, manipulate, and explore 3D urban environments. The system architecture is based on the Model-View-Controller (MVC) pattern, which separates the application into three interconnected components. This design pattern facilitates ease of development, maintenance, and scalability.</p>
+<p><strong>MVC Architecture</strong></p>
+<ul class="incremental">
+<li><strong>Model:</strong> Manages data and logic, containing 3D representations (buildings, roads, trees) and interaction logic. It also includes a scene graph for organizing 3D objects, an optional physics engine for realistic interactions, and data persistence for saving/loading designs.</li>
+<li><strong>View:</strong> Responsible for rendering model data and UI, using OpenGL for 3D city rendering. Includes a GUI layer for user interaction and camera control for navigating the 3D environment.</li>
+<li><strong>Controller:</strong> Interfaces between Model and View, handling user input, object manipulation, and UI interaction logic.</li>
+</ul>
+<p><strong>Additional Design Considerations</strong></p>
+<ul class="incremental">
+<li><strong>Modularity:</strong> Ensure each component (Model, View, Controller) is modular to facilitate independent development and testing.</li>
+<li><strong>Performance Optimization:</strong> Incorporate techniques like Level of Detail, Frustum Culling, and efficient data structures for optimal performance.</li>
+<li><strong>User Experience (UX):</strong> Design the GUI to be intuitive and responsive, focusing on ease of use for novice and experienced users.</li>
+</ul>
+<p>The application ensures a well-structured, maintainable, and scalable foundation for a sophisticated and user-friendly experience by adhering to MVC.</p>
+<h2 id="milestones-schedule">4 Milestones &amp; schedule</h2>
+<p>List of tasks/milestones/check points of your project with time schedule. For group project, it needs to provide the roles and tasks of each member.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Task ID</th>
+<th>Description</th>
+<th>Due date</th>
+<th>Lead</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Project research &amp; team up</td>
+<td>Nov. 20, 2023</td>
+<td>Jacob</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Project proposal</td>
+<td>Nov. 28, 2023</td>
+<td>Alex</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Project checkpoint</td>
+<td>Dec 1st, 2023</td>
+<td>Jacob</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Project checkpoint</td>
+<td>Dec 3rd, 2023</td>
+<td>Alex</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Project demonstration</td>
+<td>Dec. 5, 2023</td>
+<td>Jacob</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Project Submission</td>
+<td>Dec. 5, 2023</td>
+<td>Alex</td>
+</tr>
+</tbody>
+</table>
