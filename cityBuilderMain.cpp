@@ -3,6 +3,8 @@
 #include "cube.cpp"
 #include "menu.hpp"
 #include <list>
+#include "stopSign.hpp"
+
 
 float cameraAngleX = 40.0f;
 float cameraAngleY = 00.0f;
@@ -36,11 +38,11 @@ bool sunEnabled = true;  // Initially, the sun is enabled
 bool cubePositions[20][20] = {false};
 //cube cubesBuilt[20][20];
 //cube blackSquares[20][20];
-
+StopSign stopSign(10.0f, 0.0f, 10.0f);  // New position at (10, 10)
 
 cube grayCube(0, 0);  // Adjust the grid position of the gray cube
 
-cube testCube(2, 2);  // Adjust the grid position of the gray cubeb
+//cube testCube(2, 2);  // Adjust the grid position of the gray cubeb
 std::list<cube*> objlist;
 
 void drawCube(float x, float y) {
@@ -120,16 +122,19 @@ void drawGrid() {
 			glPopMatrix();
 		}
 	}
+
+    stopSign.render();
+
 }
 
 void updateCamera() {
     // Move the whole scene down and back to be in the view of the camera
     glTranslatef(0.0f, -5.0f, -cameraDistance);
-    
+
     // Apply rotations around the origin (center of the grid)
     glRotatef(cameraAngleX, 1.0f, 0.0f, 0.0f); // Rotate the camera around the X-axis
     glRotatef(cameraAngleY, 0.0f, 1.0f, 0.0f); // Rotate the camera around the Y-axis
-    
+
     // Move the camera to look at the center of the grid
     glTranslatef(-10.0f, 0.0f, -10.0f);
 }
@@ -143,7 +148,7 @@ void display() {
     updateSunPosition();  // Add this line before drawing anything
 
 	drawGrid();
-	testCube.draw();
+	//testCube.draw();
 
 //	for (int i = 0; i < 20; ++i) {
 //		for (int j = 0; j < 20; ++j) {
@@ -237,7 +242,7 @@ void keyboard(unsigned char key, int x, int y) {
         sunPosition[1] -= 1.0f;
         break;
 	}
-    
+
 
 	glutPostRedisplay();
 }
@@ -286,7 +291,7 @@ void menu() {
     glutAddMenuEntry("Light", 1);
     glutAddMenuEntry("Reset", 2);
     glutAddMenuEntry("Quit", 3);
-    
+
     // Attach the menu to the right button
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
