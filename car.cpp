@@ -15,7 +15,7 @@ void Car::draw() {
 
     glPushMatrix();
     glColor3f(1.0, 1.0, 1.0); // Normally you'd use white to show the texture
-    glTranslatef(x, 0.2, y); // Translate to car's position
+    glTranslatef(x+0.5, 0.2, y+0.5); // Translate to car's position
 
     // Car's bottom
     glBegin(GL_QUADS);
@@ -33,7 +33,37 @@ void Car::draw() {
     glTexCoord2f(0.0, 1.0); glVertex3f(-0.5, 1.0, 0.5);  // Top Left
     glEnd();
 
-    // ... Add other sides of the car similarly with appropriate texture coordinates ...
+    // Front face
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0); glVertex3f(-0.5, 0.0, 0.5);
+    glTexCoord2f(1.0, 0.0); glVertex3f(0.5, 0.0, 0.5);
+    glTexCoord2f(1.0, 1.0); glVertex3f(0.5, 1.0, 0.5);
+    glTexCoord2f(0.0, 1.0); glVertex3f(-0.5, 1.0, 0.5);
+    glEnd();
+
+    // Back face
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0); glVertex3f(-0.5, 0.0, -0.5);
+    glTexCoord2f(1.0, 0.0); glVertex3f(0.5, 0.0, -0.5);
+    glTexCoord2f(1.0, 1.0); glVertex3f(0.5, 1.0, -0.5);
+    glTexCoord2f(0.0, 1.0); glVertex3f(-0.5, 1.0, -0.5);
+    glEnd();
+
+    // Left face
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0); glVertex3f(-0.5, 0.0, -0.5);
+    glTexCoord2f(1.0, 0.0); glVertex3f(-0.5, 0.0, 0.5);
+    glTexCoord2f(1.0, 1.0); glVertex3f(-0.5, 1.0, 0.5);
+    glTexCoord2f(0.0, 1.0); glVertex3f(-0.5, 1.0, -0.5);
+    glEnd();
+
+    // Right face
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0, 0.0); glVertex3f(0.5, 0.0, -0.5);
+    glTexCoord2f(1.0, 0.0); glVertex3f(0.5, 0.0, 0.5);
+    glTexCoord2f(1.0, 1.0); glVertex3f(0.5, 1.0, 0.5);
+    glTexCoord2f(0.0, 1.0); glVertex3f(0.5, 1.0, -0.5);
+    glEnd();
 
     glPopMatrix();
     glDisable(GL_TEXTURE_2D);
