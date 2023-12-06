@@ -2,9 +2,9 @@
 #include <GL/glut.h>
 #include "cube.cpp"
 #include "menu.hpp"
+#include "car.hpp"
 #include <list>
 #include "stopSign.hpp"
-
 
 float cameraAngleX = 40.0f;
 float cameraAngleY = 00.0f;
@@ -21,7 +21,6 @@ void cullMenu(GLint option) {}
 void lightMenu(GLint option) {}
 void lightTransform(GLint) {}
 void shadeMenu(GLint option) {}
-void animateMenu(GLint option) {}
 void curveSurfaceMenu(GLint option) {}
 void move() {}
 
@@ -31,7 +30,9 @@ GLfloat ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.8f, 1.0f };
 GLfloat specularLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-GLuint waterTexture;
+// Global car object and animation flag
+Car car(0.0f, 10.0f, 0.1f); // Starting at (0, 10) with a speed of 0.1
+bool carAnimationEnabled = false; // Initially, car animation is disabled
 
 bool sunEnabled = true;  // Initially, the sun is enabled
 
@@ -59,26 +60,6 @@ void drawCube(float x, float y) {
     glEnd();
     // ... Add other faces with appropriate normals ...
     glPopMatrix();
-}
-
-
-
-void drawCubes() {
-
-//	int gridX = static_cast<int>(grayCube.getX() + 0.5);
-//	int gridY = static_cast<int>(grayCube.getY() + 0.5);
-//
-//	// Check if the position is within the grid boundaries
-//	if (gridX >= 0 && gridX < 20 && gridY >= 0 && gridY < 20) {
-//		// Mark the position as occupied
-//		cubePositions[gridX][gridY] = true;
-//        //blackSquares[gridX][gridY] = cube(gridX, gridY);
-//
-//		//cube temp(gridX+1, gridY+1);  // Adjust the grid position of the gray cube
-//		//temp.draw();
-//		//glutSwapBuffers();
-//		//drawCubes();
-//	}
 }
 
 void drawGrid() {
@@ -139,7 +120,6 @@ void updateCamera() {
     glTranslatef(-10.0f, 0.0f, -10.0f);
 }
 
-
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
@@ -148,26 +128,20 @@ void display() {
     updateSunPosition();  // Add this line before drawing anything
 
 	drawGrid();
-	//testCube.draw();
-
-//	for (int i = 0; i < 20; ++i) {
-//		for (int j = 0; j < 20; ++j) {
-//			if(cubePositions[i][j] == true)
-//			{
-//				                //blackSquares[i][j].draw();
-//
-//			}
-//		}
-//	}
 	grayCube.draw();
 
 	for (std::list<cube*>::iterator it = objlist.begin(); it != objlist.end(); ++it) {
 		    (*it)->draw();
 		}
+
+    if (carAnimationEnabled) {
+        car.update();
+    }
+    car.draw();
+
 	// Draw the gray cube
 	glutSwapBuffers();
 }
-
 
 void updateSunPosition() {
     if (sunEnabled) {
@@ -285,6 +259,17 @@ void light() {
     sunEnabled = !sunEnabled;
 }
 
+void animateMenu(GLint option) {
+    switch (option) {
+    case 1:
+        carAnimationEnabled = true;
+        break;
+    case 2:
+        carAnimationEnabled = false;
+        break;
+    }
+}
+
 void menu() {
     // Create the main menu and attach menu entries
     GLint main_Menu = glutCreateMenu(mainMenu);
@@ -292,8 +277,26 @@ void menu() {
     glutAddMenuEntry("Reset", 2);
     glutAddMenuEntry("Quit", 3);
 
+    // submenu for car
+    GLint carAnimMenu = glutCreateMenu(animateMenu);
+    glutAddMenuEntry("Start Car Animation", 1);
+    glutAddMenuEntry("Stop Car Animation", 2);
+
+    // Add the car animation submenu to the main menu
+    glutSetMenu(main_Menu);
+    glutAddSubMenu("Car Animation", carAnimMenu);
+
     // Attach the menu to the right button
     glutAttachMenu(GLUT_RIGHT_BUTTON);
+}
+
+void timer(int value) {
+    // if (carAnimationEnabled) {
+    //     car.update();
+    // }
+
+    glutPostRedisplay();
+    glutTimerFunc(16, timer, 0);
 }
 
 void init() {
@@ -318,7 +321,6 @@ void init() {
     menu(); // call the menu init function here
 }
 
-
 int main(int argc, char **argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -327,6 +329,7 @@ int main(int argc, char **argv) {
 	glutDisplayFunc(display);
 	glutSpecialFunc(specialKeys);
 	glutKeyboardFunc(keyboard);
+    glutTimerFunc(0, timer, 0); // Start the timer for the first time
 	init();
 	glutMainLoop();
 	return 0;
