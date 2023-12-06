@@ -1,30 +1,3 @@
-// #include "car.hpp"
-
-// #include <GL/glut.h>
-
-// // Declare global variables
-// extern Car car; // Declare as extern if in a header file
-// extern bool carAnimationEnabled; // Declare as extern if in a header file
-
-// // Function prototypes
-// void animateMenu(GLint option);
-
-// // Global car object
-// Car car(0.0f, 10.0f, 0.1f); // Starting at (0, 10) with a speed of 0.1
-
-// bool carAnimationEnabled = false;
-
-// void animateMenu(GLint option) {
-//     switch (option) {
-//     case 1:
-//         carAnimationEnabled = true;
-//         break;
-//     case 2:
-//         carAnimationEnabled = false;
-//         break;
-//     }
-//     glutPostRedisplay();
-// }
 #include "car.hpp" // Make sure this matches the actual name of your header file
 #include <GL/glut.h>
 
