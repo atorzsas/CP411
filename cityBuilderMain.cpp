@@ -372,7 +372,7 @@ int main(int argc, char **argv) {
 
     init();
 
-    GLuint carTexture = Texture::loadTexture("C:/cp411/assignments/project/images/mandrill.bmp");
+    GLuint carTexture = Texture::loadTexture("images/car.bmp");
     car.setTexture(carTexture);
 
 	glutDisplayFunc(display);
