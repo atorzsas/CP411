@@ -2,10 +2,11 @@
 #include <GL/glut.h>
 #include "cube.cpp"
 #include "menu.hpp"
-#include "rectangle.cpp" // Include the Rectangle class
-#include "rectangle.hpp" // Include the Rectangle class
+#include "rectangle.cpp"
+#include "rectangle.hpp"
 #include "stopSign.hpp"
 #include "car.hpp"
+#include "texture.hpp"
 
 #include <list>
 
@@ -368,11 +369,18 @@ int main(int argc, char **argv) {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(900, 900);
 	glutCreateWindow("City Builder");
+
+    init();
+
+    GLuint carTexture = Texture::loadTexture("C:/cp411/assignments/project/images/mandrill.bmp");
+    car.setTexture(carTexture);
+
 	glutDisplayFunc(display);
 	glutSpecialFunc(specialKeys);
 	glutKeyboardFunc(keyboard);
     glutTimerFunc(0, timer, 0); // Start the timer for the first time
-	init();
+    
 	glutMainLoop();
-	return 0;
+	
+    return 0;
 }
