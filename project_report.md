@@ -28,7 +28,7 @@ Yes
 
 Add a few words to high light.
 
-In our project we display our creativity through the visualziation of a road with cars, giving users a realistic feel for our environment.
+In our project we display our creativity through the visualziation of a road with an animated car, giving users a realistic feel for our environment.
 We have also added a rotating feature, allowing users to rotate the viewing angle of the City Builder.
 
 
@@ -133,7 +133,7 @@ Complete? (Yes/No)
 Yes
 
 If not presented in class, include media file, and add link to the medial file.
-(media file link)
+(https://www.loom.com/share/6bbc16ad7504453489e9443f335c0ef5?sid=7323ddb7-51c2-4991-bd65-ab8b0cc5378c)
 
 ### R3.2 Documentation
  
@@ -143,8 +143,10 @@ Yes (video demonstration)
 
 Add the hyperlinks to the documents. 
 
-![???](???.html)
-	
+link to our video via google drive:
+(please reach us via email ASAP if there are any issues)
+
+https://www.loom.com/share/6bbc16ad7504453489e9443f335c0ef5?sid=7323ddb7-51c2-4991-bd65-ab8b0cc5378c
 
 ### R3.3 Submission packaging
  
