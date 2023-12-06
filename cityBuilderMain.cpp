@@ -2,9 +2,14 @@
 #include <GL/glut.h>
 #include "cube.cpp"
 #include "menu.hpp"
-#include "car.hpp"
-#include <list>
+#include "rectangle.cpp" // Include the Rectangle class
+#include "rectangle.hpp" // Include the Rectangle class
 #include "stopSign.hpp"
+#include "car.hpp"
+
+#include <list>
+
+
 
 float cameraAngleX = 40.0f;
 float cameraAngleY = 00.0f;
@@ -21,6 +26,7 @@ void cullMenu(GLint option) {}
 void lightMenu(GLint option) {}
 void lightTransform(GLint) {}
 void shadeMenu(GLint option) {}
+//void animateMenu(GLint option) {}
 void curveSurfaceMenu(GLint option) {}
 void move() {}
 
@@ -30,9 +36,11 @@ GLfloat ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.8f, 1.0f };
 GLfloat specularLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-// Global car object and animation flag
 Car car(0.0f, 10.0f, 0.1f); // Starting at (0, 10) with a speed of 0.1
 bool carAnimationEnabled = false; // Initially, car animation is disabled
+
+
+GLuint waterTexture;
 
 bool sunEnabled = true;  // Initially, the sun is enabled
 
@@ -42,6 +50,8 @@ bool cubePositions[20][20] = {false};
 StopSign stopSign(10.0f, 0.0f, 10.0f);  // New position at (10, 10)
 
 cube grayCube(0, 0);  // Adjust the grid position of the gray cube
+rectangle testRec(0,1);
+std::list<rectangle*> rectangleList;
 
 //cube testCube(2, 2);  // Adjust the grid position of the gray cubeb
 std::list<cube*> objlist;
@@ -61,6 +71,10 @@ void drawCube(float x, float y) {
     // ... Add other faces with appropriate normals ...
     glPopMatrix();
 }
+
+
+
+
 
 void drawGrid() {
 	glLineWidth(2);
@@ -120,6 +134,7 @@ void updateCamera() {
     glTranslatef(-10.0f, 0.0f, -10.0f);
 }
 
+
 void display() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
@@ -128,20 +143,36 @@ void display() {
     updateSunPosition();  // Add this line before drawing anything
 
 	drawGrid();
+	//testCube.draw();
+
+//	for (int i = 0; i < 20; ++i) {
+//		for (int j = 0; j < 20; ++j) {
+//			if(cubePositions[i][j] == true)
+//			{
+//				                //blackSquares[i][j].draw();
+//
+//			}
+//		}
+//	}
 	grayCube.draw();
 
 	for (std::list<cube*>::iterator it = objlist.begin(); it != objlist.end(); ++it) {
 		    (*it)->draw();
 		}
 
-    if (carAnimationEnabled) {
-        car.update();
-    }
-    car.draw();
 
+	for (std::list<rectangle*>::iterator it = rectangleList.begin(); it != rectangleList.end(); ++it) {
+			    (*it)->draw();
+			}
+
+	if (carAnimationEnabled) {
+	        car.update();
+	    }
+	    car.draw();
 	// Draw the gray cube
 	glutSwapBuffers();
 }
+
 
 void updateSunPosition() {
     if (sunEnabled) {
@@ -215,8 +246,13 @@ void keyboard(unsigned char key, int x, int y) {
     case 'k':
         sunPosition[1] -= 1.0f;
         break;
-	}
+	 case 'v':
+	        // Create a new rectangle at the grayCube's position
+	        rectangle* newRectangle = new rectangle(grayCube.getX(), grayCube.getY());
+	        rectangleList.push_back(newRectangle);
+	        break;
 
+	}
 
 	glutPostRedisplay();
 }
@@ -247,6 +283,11 @@ void reset() {
     }
     objlist.clear();  // Clear the list
 
+    for (std::list<rectangle*>::iterator it = rectangleList.begin(); it != rectangleList.end(); ++it) {
+            delete *it;  // Delete the dynamically allocated cube
+        }
+    rectangleList.clear();  // Clear the list
+
     // If you have objects that need to be reset, do it here
     // Example:
     // grayCube.setPosition(0, 0); // Reset position if there's such a function
@@ -258,6 +299,7 @@ void reset() {
 void light() {
     sunEnabled = !sunEnabled;
 }
+
 
 void animateMenu(GLint option) {
     switch (option) {
@@ -277,15 +319,14 @@ void menu() {
     glutAddMenuEntry("Reset", 2);
     glutAddMenuEntry("Quit", 3);
 
-    // submenu for car
+
     GLint carAnimMenu = glutCreateMenu(animateMenu);
-    glutAddMenuEntry("Start Car Animation", 1);
-    glutAddMenuEntry("Stop Car Animation", 2);
+        glutAddMenuEntry("Start Car Animation", 1);
+        glutAddMenuEntry("Stop Car Animation", 2);
 
-    // Add the car animation submenu to the main menu
-    glutSetMenu(main_Menu);
-    glutAddSubMenu("Car Animation", carAnimMenu);
-
+        // Add the car animation submenu to the main menu
+        glutSetMenu(main_Menu);
+        glutAddSubMenu("Car Animation", carAnimMenu);
     // Attach the menu to the right button
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
@@ -320,6 +361,7 @@ void init() {
 
     menu(); // call the menu init function here
 }
+
 
 int main(int argc, char **argv) {
 	glutInit(&argc, argv);
